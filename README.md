@@ -1,2 +1,2 @@
-# LP1Practical
-LP1 Practical codes - CC and WAD
+# LP2Practical
+LP2 Practical codes - CC and WAD
