@@ -1,0 +1,212 @@
+✅ 🔴 1. Salesforce Cloud Applications (C1, C2, C3, C4, C8, C12, C13, C16, C17, C18, C19, C20, C21)
+📌 What is common here?
+
+All of these are basically:
+
+“Design and develop a custom application using Salesforce Cloud”
+
+So you are expected to build:
+
+Objects (tables)
+Fields
+Relationships (sometimes)
+Forms (UI)
+Basic CRUD operations
+Reports / List views
+🧠 Examples grouped:
+✔ Basic Salesforce Apps
+C1 → Generic custom app
+C3 → Restaurant app
+C4 → Online course system
+C16 → Gallery / static app
+C17 → Employee system
+C18 → Student system
+C19 → Student system (same as above)
+C20 → Employee CRUD system
+C21 → Bookstore system
+🔧 ✅ Implementation Steps (COMMON FOR ALL SALESFORCE C TASKS)
+🟢 STEP 1: Login to Salesforce
+Go to: https://login.salesforce.com
+Use Developer Edition account
+🟢 STEP 2: Create Application
+Setup → App Manager
+Click New Lightning App
+Enter:
+App Name (e.g., StudentApp / BookStoreApp)
+Save
+🟢 STEP 3: Create Objects (VERY IMPORTANT)
+
+Example:
+
+👉 Student System (C18 / C19)
+
+Create Object:
+
+Student
+
+Fields:
+
+Name (Text)
+Roll_No (Number)
+WAD_Marks (Number)
+DSBDA_Marks (Number)
+CNS_Marks (Number)
+CC_Marks (Number)
+AI_Marks (Number)
+👉 Employee System (C20 / C17)
+
+Object:
+
+Employee
+
+Fields:
+
+Name
+Department
+Designation
+Salary
+Joining_Date
+👉 Bookstore (C21)
+
+Object:
+
+Book
+
+Fields:
+
+Title
+Author
+Price
+Genre
+👉 Course System (C4)
+
+Object:
+
+Course
+
+Fields:
+
+Course Name
+Instructor
+Duration
+Fee
+🟢 STEP 4: Add Records
+Go to Object → Records → New
+Insert sample data (5–10 entries)
+🟢 STEP 5: Create Tabs
+Setup → Tabs
+Create Tab for each object:
+Student Tab
+Employee Tab
+Book Tab
+🟢 STEP 6: Create App Pages (Lightning App Builder)
+Add:
+List View
+Record Form
+Reports
+🟢 STEP 7: Testing
+Insert data
+View list
+Edit / Delete records
+📊 RESULT (what examiner expects)
+
+✔ App created
+✔ Object created
+✔ Fields defined
+✔ Data inserted
+✔ UI visible in tab
+✔ Basic CRUD working
+
+
+
+🔴 2. PaaS Deployment (C5, C6, C14, C15)
+📌 Common meaning:
+
+Deploy a web application on a cloud platform (Heroku / Render / Netlify / Vercel)
+
+🔧 Implementation Steps (GENERIC PaaS DEPLOYMENT)
+🟢 STEP 1: Create Node.js App
+npm init -y
+npm install express
+🟢 STEP 2: Create server.js
+const express = require('express');
+const app = express();
+
+app.get('/', (req,res)=>{
+  res.send("Deployed App Running on PaaS");
+});
+
+app.listen(process.env.PORT || 3000);
+🟢 STEP 3: Add Procfile (Heroku only)
+web: node server.js
+🟢 STEP 4: Push to GitHub
+git init
+git add .
+git commit -m "deploy"
+git push origin main
+🟢 STEP 5: Deploy (choose one)
+👉 Render (EASIEST)
+Go to render.com
+New Web Service
+Connect GitHub repo
+Deploy
+👉 Heroku
+heroku login
+heroku create app-name
+git push heroku main
+📊 RESULT
+
+✔ Live URL generated
+✔ App accessible on internet
+
+
+
+
+3. Virtual Machine File Transfer (C7, C9, C10, C11, C23, C24, C25, C26)
+📌 Common Task:
+
+Transfer 2 text files between two VMs + modify + display before/after
+
+🔧 IMPLEMENTATION STEPS (VERY IMPORTANT)
+🟢 STEP 1: Create files on VM1
+echo "Hello from VM1" > file1.txt
+echo "Second file VM1" > file2.txt
+🟢 STEP 2: View content
+cat file1.txt
+cat file2.txt
+🟢 STEP 3: Transfer file using SCP
+scp file1.txt user@VM2_IP:/home/user/
+scp file2.txt user@VM2_IP:/home/user/
+🟢 STEP 4: Login VM2
+ssh user@VM2_IP
+🟢 STEP 5: Verify files
+cat file1.txt
+cat file2.txt
+🟢 STEP 6: Modify file on VM2
+echo "Added on VM2" >> file1.txt
+🟢 STEP 7: Send back to VM1 (optional)
+scp file1.txt user@VM1_IP:/home/user/
+
+
+
+✔ Best tools used
+scp (secure copy)
+ssh
+nano / vim
+cat
+🔧 Typical Exam Setup (Ubuntu VM1 + VM2)
+👉 Step 1: Check SSH service
+sudo systemctl status ssh
+
+If not installed:
+
+sudo apt update
+sudo apt install openssh-server -y
+👉 Step 2: Find IP address
+ip a
+👉 Step 3: Create file on VM1
+echo "Hello from VM1" > file1.txt
+👉 Step 4: Transfer file
+scp file1.txt user@VM2_IP:/home/user/
+👉 Step 5: Verify on VM2
+cat file1.txt
