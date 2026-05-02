@@ -1,0 +1,105 @@
+📁 Project Structure
+W16/
+ ├── server.js
+ └── public/
+      ├── index.html
+      ├── menu.html
+      ├── about.html
+      ├── contact.html
+      └── images/
+           └── food.jpg
+🔧 Step 1: Install Express
+npm init -y
+npm install express
+🔧 Step 2: server.js
+const express = require('express');
+const path = require('path');
+
+const app = express();
+
+// Serve static files from "public" folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.listen(3000, () => {
+  console.log("Server running at http://localhost:3000");
+});
+🔧 Step 3: index.html (Home Page)
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Restaurant Home</title>
+</head>
+<body>
+
+<h1>Welcome to Foodies Restaurant</h1>
+
+<nav>
+  <a href="index.html">Home</a> |
+  <a href="menu.html">Menu</a> |
+  <a href="about.html">About</a> |
+  <a href="contact.html">Contact</a>
+</nav>
+
+<p>Best food in town!</p>
+
+<img src="images/food.jpg" width="300">
+
+</body>
+</html>
+🔧 Step 4: menu.html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Menu</title>
+</head>
+<body>
+
+<h2>Our Menu</h2>
+
+<ul>
+  <li>Pizza - ₹200</li>
+  <li>Burger - ₹150</li>
+  <li>Pasta - ₹180</li>
+</ul>
+
+<a href="index.html">Back</a>
+
+</body>
+</html>
+🔧 Step 5: about.html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>About</title>
+</head>
+<body>
+
+<h2>About Us</h2>
+<p>We serve delicious food with quality ingredients.</p>
+
+<a href="index.html">Back</a>
+
+</body>
+</html>
+🔧 Step 6: contact.html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact</title>
+</head>
+<body>
+
+<h2>Contact Us</h2>
+<p>Email: foodies@gmail.com</p>
+<p>Phone: 9876543210</p>
+
+<a href="index.html">Back</a>
+
+</body>
+</html>
+▶️ Run the Project
+node server.js
+
+Open:
+
+http://localhost:3000

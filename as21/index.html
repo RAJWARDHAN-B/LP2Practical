@@ -1,0 +1,111 @@
+📁 Project Structure
+W21/
+ ├── server.js
+ └── package.json
+🔧 Step 1: Install Dependencies
+npm init -y
+npm install express mongoose body-parser
+🔧 Step 2: server.js (FULL CODE)
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+
+const app = express();
+
+// Middleware
+app.use(bodyParser.json());
+
+// MongoDB Connection
+mongoose.connect('mongodb://127.0.0.1:27017/bookstore')
+.then(()=> console.log("MongoDB Connected"))
+.catch(err => console.log(err));
+
+// Schema
+const bookSchema = new mongoose.Schema({
+  title: String,
+  author: String,
+  price: Number,
+  genre: String
+});
+
+const Book = mongoose.model('Book', bookSchema);
+
+
+// ➤ 1. Add Book
+app.post('/addBook', async (req,res)=>{
+  try {
+    const book = new Book(req.body);
+    await book.save();
+    res.json({ message: "Book Added" });
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+
+// ➤ 2. Get All Books
+app.get('/books', async (req,res)=>{
+  try {
+    const data = await Book.find();
+    res.json(data);
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+
+// ➤ 3. Update Book
+app.put('/updateBook/:id', async (req,res)=>{
+  try {
+    await Book.findByIdAndUpdate(req.params.id, req.body);
+    res.json({ message: "Book Updated" });
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+
+// ➤ 4. Delete Book
+app.delete('/deleteBook/:id', async (req,res)=>{
+  try {
+    await Book.findByIdAndDelete(req.params.id);
+    res.json({ message: "Book Deleted" });
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+
+// Start Server
+app.listen(3000, ()=>{
+  console.log("Server running at http://localhost:3000");
+});
+▶️ Run the Project
+node server.js
+🧪 API Testing (IMPORTANT)
+
+Use Postman / Thunder Client
+
+➤ Add Book (POST)
+POST http://localhost:3000/addBook
+
+Body:
+
+{
+  "title": "Clean Code",
+  "author": "Robert C. Martin",
+  "price": 500,
+  "genre": "Programming"
+}
+➤ Get All Books (GET)
+http://localhost:3000/books
+➤ Update Book (PUT)
+http://localhost:3000/updateBook/<id>
+
+Body:
+
+{
+  "price": 650
+}
+➤ Delete Book (DELETE)
+http://localhost:3000/deleteBook/<id>

@@ -1,0 +1,23 @@
+<input id="name" placeholder="Name">
+<input id="email" placeholder="Email">
+<input id="mobile" placeholder="Mobile">
+<button onclick="register()">Register</button>
+
+<script>
+function register() {
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+
+  const user = {
+    name: name.value,
+    email: email.value,
+    mobile: mobile.value
+  };
+
+  // AJAX POST simulation
+  setTimeout(() => {
+    users.push(user);
+    localStorage.setItem("users", JSON.stringify(users));
+    alert("Registered!");
+  }, 500);
+}
+</script>

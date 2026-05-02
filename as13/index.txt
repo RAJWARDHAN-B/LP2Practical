@@ -1,0 +1,160 @@
+🔧 Step 1: Create Project
+ng new user-app
+cd user-app
+ng generate component register
+ng generate component login
+ng generate component profile
+ng generate service auth
+🔧 Step 2: app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+
+import { AppComponent } from './app.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    RegisterComponent,
+    LoginComponent,
+    ProfileComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+🔧 Step 3: auth.service.ts
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  users: any[] = [];
+  currentUser: any = null;
+
+  register(user: any) {
+    this.users.push(user);
+  }
+
+  login(email: string, password: string) {
+    const user = this.users.find(
+      u => u.email === email && u.password === password
+    );
+    if (user) {
+      this.currentUser = user;
+      return true;
+    }
+    return false;
+  }
+
+  getUser() {
+    return this.currentUser;
+  }
+}
+🔧 Step 4: register.component.ts
+import { Component } from '@angular/core';
+import { AuthService } from '../auth.service';
+
+@Component({
+  selector: 'app-register',
+  templateUrl: './register.component.html'
+})
+export class RegisterComponent {
+
+  user = {
+    name: '',
+    email: '',
+    password: ''
+  };
+
+  constructor(private auth: AuthService) {}
+
+  register() {
+    this.auth.register(this.user);
+    alert("Registration Successful");
+    this.user = { name: '', email: '', password: '' };
+  }
+}
+register.component.html
+<h2>Register</h2>
+
+<input type="text" placeholder="Name" [(ngModel)]="user.name"><br>
+<input type="email" placeholder="Email" [(ngModel)]="user.email"><br>
+<input type="password" placeholder="Password" [(ngModel)]="user.password"><br>
+
+<button (click)="register()">Register</button>
+🔧 Step 5: login.component.ts
+import { Component } from '@angular/core';
+import { AuthService } from '../auth.service';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html'
+})
+export class LoginComponent {
+
+  email = '';
+  password = '';
+
+  constructor(private auth: AuthService) {}
+
+  login() {
+    if (this.auth.login(this.email, this.password)) {
+      alert("Login Successful");
+    } else {
+      alert("Invalid Credentials");
+    }
+  }
+}
+login.component.html
+<h2>Login</h2>
+
+<input type="email" placeholder="Email" [(ngModel)]="email"><br>
+<input type="password" placeholder="Password" [(ngModel)]="password"><br>
+
+<button (click)="login()">Login</button>
+🔧 Step 6: profile.component.ts
+import { Component } from '@angular/core';
+import { AuthService } from '../auth.service';
+
+@Component({
+  selector: 'app-profile',
+  templateUrl: './profile.component.html'
+})
+export class ProfileComponent {
+
+  constructor(public auth: AuthService) {}
+}
+profile.component.html
+<h2>Profile</h2>
+
+<div *ngIf="auth.getUser(); else noUser">
+  <p><b>Name:</b> {{auth.getUser().name}}</p>
+  <p><b>Email:</b> {{auth.getUser().email}}</p>
+</div>
+
+<ng-template #noUser>
+  <p>No user logged in</p>
+</ng-template>
+🔧 Step 7: app.component.html
+<h1>Angular User App</h1>
+
+<app-register></app-register>
+<hr>
+<app-login></app-login>
+<hr>
+<app-profile></app-profile>
+▶️ Run the App
+ng serve
+
+Open:
+
+http://localhost:4200

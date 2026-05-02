@@ -1,0 +1,121 @@
+📁 Project Structure
+W20/
+ ├── server.js
+ └── package.json
+🔧 Step 1: Install Dependencies
+npm init -y
+npm install express mongoose body-parser
+🔧 Step 2: server.js (FULL CODE)
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+
+const app = express();
+
+// Middleware
+app.use(bodyParser.json());
+
+// Connect MongoDB
+mongoose.connect('mongodb://127.0.0.1:27017/employees')
+.then(()=> console.log("MongoDB Connected"))
+.catch(err => console.log(err));
+
+// Schema
+const employeeSchema = new mongoose.Schema({
+  name: String,
+  department: String,
+  designation: String,
+  salary: Number,
+  joining_date: String
+});
+
+const Employee = mongoose.model('Employee', employeeSchema);
+
+
+// ➤ 1. Add Employee
+app.post('/add', async (req,res)=>{
+  try {
+    const emp = new Employee(req.body);
+    await emp.save();
+    res.send("Employee Added");
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+
+// ➤ 2. View All Employees
+app.get('/employees', async (req,res)=>{
+  try {
+    const data = await Employee.find();
+    res.json(data);
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+
+// ➤ 3. Update Employee
+app.put('/update/:id', async (req,res)=>{
+  try {
+    await Employee.findByIdAndUpdate(req.params.id, req.body);
+    res.send("Employee Updated");
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+
+// ➤ 4. Delete Employee
+app.delete('/delete/:id', async (req,res)=>{
+  try {
+    await Employee.findByIdAndDelete(req.params.id);
+    res.send("Employee Deleted");
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+
+// Start server
+app.listen(3000, ()=>{
+  console.log("Server running at http://localhost:3000");
+});
+▶️ Run the Project
+node server.js
+🧪 Testing APIs (IMPORTANT)
+
+Use:
+
+Postman
+Thunder Client (VS Code)
+➤ Add Employee (POST)
+POST http://localhost:3000/add
+
+Body (JSON):
+
+{
+  "name": "Rahul",
+  "department": "IT",
+  "designation": "Developer",
+  "salary": 50000,
+  "joining_date": "2024-01-01"
+}
+➤ Get All Employees (GET)
+http://localhost:3000/employees
+➤ Update Employee (PUT)
+http://localhost:3000/update/<id>
+
+Body:
+
+{
+  "salary": 60000
+}
+➤ Delete Employee (DELETE)
+http://localhost:3000/delete/<id>
+
+Pro Tip (to impress examiner)
+
+Return proper JSON response:
+
+res.json({ message: "Employee Added" });

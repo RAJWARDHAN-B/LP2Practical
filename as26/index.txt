@@ -1,0 +1,86 @@
+📁 Project Structure
+W26/
+ └── index.html
+🔧 Full Code (index.html)
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PICT B.E. Course Structure</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- jQuery Mobile CDN -->
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+
+<body>
+
+<div data-role="page" id="home">
+
+  <div data-role="header">
+    <h1>PICT B.E. Structure</h1>
+  </div>
+
+  <div data-role="content">
+
+    <!-- FE -->
+    <div data-role="collapsible">
+      <h3>FE (First Year)</h3>
+      <ul>
+        <li>Engineering Mathematics I & II</li>
+        <li>Physics / Chemistry</li>
+        <li>Basic Programming</li>
+        <li>Engineering Mechanics</li>
+      </ul>
+    </div>
+
+    <!-- SE -->
+    <div data-role="collapsible">
+      <h3>SE (Second Year)</h3>
+      <ul>
+        <li>Data Structures</li>
+        <li>Object Oriented Programming</li>
+        <li>Digital Electronics</li>
+        <li>Discrete Mathematics</li>
+      </ul>
+    </div>
+
+    <!-- TE -->
+    <div data-role="collapsible">
+      <h3>TE (Third Year)</h3>
+      <ul>
+        <li>Database Management Systems</li>
+        <li>Operating Systems</li>
+        <li>Computer Networks</li>
+        <li>Web Development</li>
+      </ul>
+    </div>
+
+    <!-- BE -->
+    <div data-role="collapsible">
+      <h3>BE (Final Year)</h3>
+      <ul>
+        <li>Machine Learning</li>
+        <li>Cloud Computing</li>
+        <li>Information Security</li>
+        <li>Project Work</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div data-role="footer">
+    <h4>© 2026 PICT</h4>
+  </div>
+
+</div>
+
+</body>
+</html>
+▶️ Run
+
+Just open:
+
+index.html

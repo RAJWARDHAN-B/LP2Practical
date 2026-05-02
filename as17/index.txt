@@ -1,0 +1,127 @@
+📁 Project Structure
+W17/
+ ├── server.js
+ ├── employees.json
+ └── public/
+      ├── index.html
+      └── images/
+           ├── emp1.jpg
+           ├── emp2.jpg
+           └── emp3.jpg
+🔧 Step 1: Install Express
+npm init -y
+npm install express
+🔧 Step 2: employees.json
+[
+  {
+    "name": "Rahul Sharma",
+    "designation": "Manager",
+    "department": "Sales",
+    "salary": 50000,
+    "image": "images/emp1.jpg"
+  },
+  {
+    "name": "Sneha Patil",
+    "designation": "Developer",
+    "department": "IT",
+    "salary": 60000,
+    "image": "images/emp2.jpg"
+  },
+  {
+    "name": "Amit Verma",
+    "designation": "Analyst",
+    "department": "Finance",
+    "salary": 55000,
+    "image": "images/emp3.jpg"
+  }
+]
+🔧 Step 3: server.js
+const express = require('express');
+const app = express();
+const path = require('path');
+
+const employees = require('./employees.json');
+
+// API route
+app.get('/api/employees', (req, res) => {
+  res.json(employees);
+});
+
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Start server
+app.listen(3000, () => {
+  console.log("Server running at http://localhost:3000");
+});
+🔧 Step 4: public/index.html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Employee Directory</title>
+
+  <style>
+    body { font-family: Arial; }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>Employee Directory</h2>
+
+<table id="empTable">
+  <tr>
+    <th>Image</th>
+    <th>Name</th>
+    <th>Designation</th>
+    <th>Department</th>
+    <th>Salary</th>
+  </tr>
+</table>
+
+<script>
+fetch('/api/employees')
+  .then(res => res.json())
+  .then(data => {
+
+    let rows = '';
+
+    data.forEach(emp => {
+      rows += `
+        <tr>
+          <td><img src="${emp.image}"></td>
+          <td>${emp.name}</td>
+          <td>${emp.designation}</td>
+          <td>${emp.department}</td>
+          <td>₹${emp.salary}</td>
+        </tr>
+      `;
+    });
+
+    document.getElementById('empTable').innerHTML += rows;
+  })
+  .catch(err => console.log(err));
+</script>
+
+</body>
+</html>
+▶️ Run the Project
+node server.js
+
+Open:
+
+http://localhost:3000

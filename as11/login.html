@@ -1,0 +1,15 @@
+<input id="email" placeholder="Email">
+<input id="password" placeholder="Password">
+<button onclick="login()">Login</button>
+
+<script>
+function login() {
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  let email = document.getElementById("email").value;
+
+  const user = users.find(u => u.email === email);
+
+  if (user) alert("Login Success");
+  else alert("User not found");
+}
+</script>

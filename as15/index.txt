@@ -1,0 +1,108 @@
+📁 Project Structure
+W15/
+ ├── server.js
+ ├── products.json
+ └── public/
+      ├── index.html
+      └── images/
+           ├── phone.jpg
+           ├── laptop.jpg
+           └── headphones.jpg
+🔧 Step 1: Install Dependencies
+npm init -y
+npm install express
+🔧 Step 2: products.json
+[
+  {
+    "id": 1,
+    "name": "Smartphone",
+    "price": 20000,
+    "image": "images/phone.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Laptop",
+    "price": 55000,
+    "image": "images/laptop.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Headphones",
+    "price": 3000,
+    "image": "images/headphones.jpg"
+  }
+]
+🔧 Step 3: server.js
+const express = require('express');
+const app = express();
+const products = require('./products.json');
+const path = require('path');
+
+// API route
+app.get('/api/products', (req, res) => {
+  res.json(products);
+});
+
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Start server
+app.listen(3000, () => {
+  console.log("Server running at http://localhost:3000");
+});
+🔧 Step 4: public/index.html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Catalog</title>
+  <style>
+    body { font-family: Arial; }
+    .container { display: flex; gap: 20px; }
+    .card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      width: 200px;
+      text-align: center;
+      border-radius: 10px;
+    }
+    img {
+      width: 150px;
+      height: 150px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>Product Catalog</h2>
+<div class="container" id="products"></div>
+
+<script>
+fetch('/api/products')
+  .then(res => res.json())
+  .then(data => {
+    let output = '';
+
+    data.forEach(product => {
+      output += `
+        <div class="card">
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>₹${product.price}</p>
+        </div>
+      `;
+    });
+
+    document.getElementById('products').innerHTML = output;
+  })
+  .catch(err => console.log(err));
+</script>
+
+</body>
+</html>
+▶️ Run the Project
+node server.js
+
+Open:
+
+http://localhost:3000

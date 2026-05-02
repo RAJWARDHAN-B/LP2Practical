@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+
+<body ng-controller="TodoController">
+
+<h2>Angular To-Do</h2>
+
+<input ng-model="newTask">
+<button ng-click="addTask()">Add</button>
+
+<ul>
+  <li ng-repeat="task in tasks">
+    <input ng-model="task.name">
+    <button ng-click="deleteTask($index)">Delete</button>
+  </li>
+</ul>
+
+<script>
+angular.module("todoApp", [])
+.controller("TodoController", function($scope) {
+  $scope.tasks = [];
+
+  $scope.addTask = function() {
+    $scope.tasks.push({ name: $scope.newTask });
+    $scope.newTask = "";
+  };
+
+  $scope.deleteTask = function(index) {
+    $scope.tasks.splice(index, 1);
+  };
+});
+</script>
+
+</body>
+</html>

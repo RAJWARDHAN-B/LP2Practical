@@ -1,0 +1,70 @@
+📁 Project Structure
+W23/
+ └── index.html
+ └── images/
+      ├── coding.jpg
+      ├── robotics.jpg
+      ├── dance.jpg
+🔧 Full Code (index.html)
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PICT Clubs</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- jQuery Mobile -->
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+
+<body>
+
+<div data-role="page" id="home">
+
+  <div data-role="header">
+    <h1>PICT Clubs</h1>
+  </div>
+
+  <div data-role="content">
+
+    <!-- Coding Club -->
+    <div data-role="collapsible">
+      <h3>Coding Club</h3>
+      <p>Focus on competitive programming and hackathons.</p>
+      <p><b>Achievements:</b> Winner of SIH Hackathon</p>
+      <img src="images/coding.jpg" width="100%">
+    </div>
+
+    <!-- Robotics Club -->
+    <div data-role="collapsible">
+      <h3>Robotics Club</h3>
+      <p>Builds robots and automation systems.</p>
+      <p><b>Achievements:</b> National Robotics Runner-up</p>
+      <img src="images/robotics.jpg" width="100%">
+    </div>
+
+    <!-- Dance Club -->
+    <div data-role="collapsible">
+      <h3>Dance Club</h3>
+      <p>Promotes cultural and stage dance events.</p>
+      <p><b>Achievements:</b> Inter-college Dance Champions</p>
+      <img src="images/dance.jpg" width="100%">
+    </div>
+
+  </div>
+
+  <div data-role="footer">
+    <h4>PICT © 2026</h4>
+  </div>
+
+</div>
+
+</body>
+</html>
+▶️ Run
+
+Just open:
+
+index.html

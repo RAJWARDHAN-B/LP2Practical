@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>To-Do List</h2>
+<input id="task">
+<button onclick="addTask()">Add</button>
+
+<ul id="list"></ul>
+
+<script>
+let tasks = [];
+
+function render() {
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+  tasks.forEach((t, i) => {
+    list.innerHTML += `
+      <li>${t}
+        <button onclick="deleteTask(${i})">Delete</button>
+      </li>`;
+  });
+}
+
+function addTask() {
+  const val = document.getElementById("task").value;
+
+  // Simulated AJAX POST
+  setTimeout(() => {
+    tasks.push(val);
+    render();
+  }, 300);
+}
+
+function deleteTask(i) {
+  setTimeout(() => {
+    tasks.splice(i, 1);
+    render();
+  }, 300);
+}
+</script>
+
+</body>
+</html>
