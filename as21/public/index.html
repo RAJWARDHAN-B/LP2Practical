@@ -38,7 +38,6 @@
   <div id="books"></div>
 
   <script>
-    const API = "http://localhost:3000";
 
     async function addBook() {
       const book = {
@@ -48,7 +47,7 @@
         genre: document.getElementById("genre").value
       };
 
-      await fetch(`${API}/addBook`, {
+      await fetch(`/addBook`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -61,7 +60,7 @@
     }
 
     async function getBooks() {
-      const res = await fetch(`${API}/books`);
+      const res = await fetch(`/books`);
       const data = await res.json();
 
       const container = document.getElementById("books");
@@ -81,7 +80,7 @@
     }
 
     async function deleteBook(id) {
-      await fetch(`${API}/deleteBook/${id}`, {
+      await fetch(`/deleteBook/${id}`, {
         method: "DELETE"
       });
       alert("Deleted!");
@@ -94,7 +93,7 @@
       const newPrice = prompt("Enter new price:");
       const newGenre = prompt("Enter new genre:");
 
-      await fetch(`${API}/updateBook/${id}`, {
+      await fetch(`/updateBook/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json"
