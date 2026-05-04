@@ -1,0 +1,169 @@
+1. Set up an Angular project
+
+If you don’t have Angular CLI:
+
+npm install -g @angular/cli
+
+Create a new project:
+
+ng new todo-app
+cd todo-app
+ng serve
+
+Open:
+👉 http://localhost:4200
+
+🧩 2. Generate a component
+ng generate component todo
+
+This creates:
+
+todo.component.ts
+todo.component.html
+todo.component.css
+⚙️ 3. Enable Two-Way Data Binding
+
+Open app.module.ts and import FormsModule:
+
+import { FormsModule } from '@angular/forms';
+
+@NgModule({
+  imports: [
+    FormsModule
+  ]
+})
+export class AppModule { }
+
+Without this, [(ngModel)] won’t work.
+
+🧠 4. Define Task Structure (Logic)
+
+Edit todo.component.ts:
+
+import { Component } from '@angular/core';
+
+interface Task {
+  id: number;
+  title: string;
+  editing: boolean;
+}
+
+@Component({
+  selector: 'app-todo',
+  templateUrl: './todo.component.html',
+  styleUrls: ['./todo.component.css']
+})
+export class TodoComponent {
+
+  tasks: Task[] = [];
+  newTask: string = '';
+  nextId: number = 1;
+
+  addTask() {
+    if (this.newTask.trim() === '') return;
+
+    this.tasks.push({
+      id: this.nextId++,
+      title: this.newTask,
+      editing: false
+    });
+
+    this.newTask = '';
+  }
+
+  deleteTask(id: number) {
+    this.tasks = this.tasks.filter(task => task.id !== id);
+  }
+
+  editTask(task: Task) {
+    task.editing = true;
+  }
+
+  saveTask(task: Task) {
+    task.editing = false;
+  }
+}
+🎨 5. Build the UI (HTML)
+
+Edit todo.component.html:
+
+<div class="container">
+  <h2>To-Do List</h2>
+
+  <!-- Add Task -->
+  <input 
+    [(ngModel)]="newTask" 
+    placeholder="Enter a task"
+  />
+  <button (click)="addTask()">Add</button>
+
+  <ul>
+    <li *ngFor="let task of tasks">
+
+      <!-- View Mode -->
+      <span *ngIf="!task.editing">
+        {{ task.title }}
+      </span>
+
+      <!-- Edit Mode -->
+      <input 
+        *ngIf="task.editing"
+        [(ngModel)]="task.title"
+      />
+
+      <!-- Buttons -->
+      <button *ngIf="!task.editing" (click)="editTask(task)">
+        Edit
+      </button>
+
+      <button *ngIf="task.editing" (click)="saveTask(task)">
+        Save
+      </button>
+
+      <button (click)="deleteTask(task.id)">
+        Delete
+      </button>
+
+    </li>
+  </ul>
+</div>
+🎯 6. Use the Component
+
+Edit app.component.html:
+
+<app-todo></app-todo>
+🎨 7. Basic Styling (Optional)
+
+Edit todo.component.css:
+
+.container {
+  width: 300px;
+  margin: auto;
+  text-align: center;
+}
+
+input {
+  margin: 5px;
+  padding: 5px;
+}
+
+button {
+  margin: 5px;
+}
+
+li {
+  list-style: none;
+  margin: 10px 0;
+}
+🔄 8. How Two-Way Binding Works
+
+This line is key:
+
+[(ngModel)]="task.title"
+
+It does two things at once:
+
+Displays the value in the input
+Updates the value in real-time as the user types
+
+So when you edit a task → the UI and data stay in sync automatically.

@@ -1,3 +1,5 @@
+npm install -g @angular/cli
+
 🔧 Step 1: Create Project
 ng new user-app
 cd user-app
