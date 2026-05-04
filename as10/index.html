@@ -3,6 +3,7 @@
 <body>
 
 <h2>To-Do List</h2>
+
 <input id="task">
 <button onclick="addTask()">Add</button>
 
@@ -10,34 +11,80 @@
 
 <script>
 let tasks = [];
+let editIndex = -1;
 
+// Render list
 function render() {
   const list = document.getElementById("list");
   list.innerHTML = "";
+
   tasks.forEach((t, i) => {
     list.innerHTML += `
-      <li>${t}
+      <li>
+        ${t}
         <button onclick="deleteTask(${i})">Delete</button>
-      </li>`;
+        <button onclick="editTask(${i})">Edit</button>
+      </li>
+    `;
   });
 }
 
+// Add Task (simulated AJAX)
 function addTask() {
   const val = document.getElementById("task").value;
 
-  // Simulated AJAX POST
+  if (!val.trim()) {
+    alert("Enter a task");
+    return;
+  }
+
   setTimeout(() => {
     tasks.push(val);
+    document.getElementById("task").value = "";
     render();
   }, 300);
 }
 
+// Delete Task (simulated AJAX)
 function deleteTask(i) {
   setTimeout(() => {
     tasks.splice(i, 1);
     render();
   }, 300);
 }
+
+// Edit Task (load value into input)
+function editTask(i) {
+  document.getElementById("task").value = tasks[i];
+  editIndex = i;
+
+  // change Add button behavior temporarily
+  document.querySelector("button").innerText = "Update";
+  document.querySelector("button").setAttribute("onclick", "updateTask()");
+}
+
+// Update Task (simulated AJAX)
+function updateTask() {
+  const val = document.getElementById("task").value;
+
+  if (!val.trim()) {
+    alert("Enter a task");
+    return;
+  }
+
+  setTimeout(() => {
+    tasks[editIndex] = val;
+
+    document.getElementById("task").value = "";
+    editIndex = -1;
+
+    document.querySelector("button").innerText = "Add";
+    document.querySelector("button").setAttribute("onclick", "addTask()");
+
+    render();
+  }, 300);
+}
+
 </script>
 
 </body>

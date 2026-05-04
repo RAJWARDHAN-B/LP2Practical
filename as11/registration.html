@@ -1,6 +1,17 @@
-<input id="name" placeholder="Name">
-<input id="email" placeholder="Email">
-<input id="mobile" placeholder="Mobile">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration</title>
+</head>
+<body>
+
+<h2>User Registration</h2>
+
+<input id="name" placeholder="Name"><br><br>
+<input id="email" placeholder="Email"><br><br>
+<input id="mobile" placeholder="Mobile"><br><br>
+<input id="password" placeholder="Password"><br><br>
+
 <button onclick="register()">Register</button>
 
 <script>
@@ -8,16 +19,33 @@ function register() {
   let users = JSON.parse(localStorage.getItem("users")) || [];
 
   const user = {
-    name: name.value,
-    email: email.value,
-    mobile: mobile.value
+    name: document.getElementById("name").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    mobile: document.getElementById("mobile").value.trim(),
+    password: document.getElementById("password").value.trim()
   };
 
-  // AJAX POST simulation
+  // Validation
+  if (!user.name || !user.email || !user.password) {
+    alert("Please fill all required fields");
+    return;
+  }
+
+  // Check duplicate email
+  const exists = users.find(u => u.email === user.email);
+  if (exists) {
+    alert("User already exists!");
+    return;
+  }
+
+  // AJAX simulation
   setTimeout(() => {
     users.push(user);
     localStorage.setItem("users", JSON.stringify(users));
-    alert("Registered!");
+    alert("Registration Successful!");
   }, 500);
 }
 </script>
+
+</body>
+</html>
