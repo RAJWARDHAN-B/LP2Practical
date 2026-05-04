@@ -1,5 +1,5 @@
 {
-  "name": "as21",
+  "name": "as14",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,9 +11,6 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "body-parser": "^2.2.2",
-    "express": "^5.2.1",
-    "mongoose": "^9.6.1",
-    "mongosh": "^2.8.3"
+    "express": "^5.2.1"
   }
 }
