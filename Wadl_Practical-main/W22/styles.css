@@ -1,0 +1,23 @@
+.ui-header {
+    background: #004a99 !important;
+    color: white !important;
+    text-shadow: none;
+}
+
+.content-padding {
+    padding: 15px;
+}
+
+.welcome-block {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.logo-img {
+    width: 80px;
+    border-radius: 50%;
+}
+
+.search-list {
+    margin-top: 20px;
+}

@@ -1,0 +1,49 @@
+/* GLOBAL */
+body {
+    font-family: 'Segoe UI', sans-serif !important;
+    background: #f4f6fb !important;
+}
+
+/* HEADER */
+.ui-header {
+    background: #d32f2f !important;
+    color: white !important;
+    text-shadow: none;
+}
+
+.ui-header h1 {
+    color: white !important;
+}
+
+/* MOVIE INFO */
+.movie-info {
+    padding: 15px;
+}
+
+.rating {
+    color: #fbc02d;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+
+/* CONTENT SPACING */
+.ui-content {
+    padding: 15px !important;
+}
+
+
+/* IMAGES */
+img {
+    border-radius: 8px;
+    margin-top: 10px;
+    height: 200px;
+    width: 100%;
+}
+
+/* FOOTER */
+.ui-footer {
+    background: #222 !important;
+    color: white !important;
+    text-align: center;
+}

@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.ui-header,
+.ui-footer {
+    background: #004a99 !important;
+    color: white !important;
+    text-shadow: none !important;
+}
+
+.ui-header h1,
+.ui-footer h4 {
+    color: white !important;
+}
+
+.ui-content {
+    padding: 15px;
+}
+
+img {
+    border-radius: 8px;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

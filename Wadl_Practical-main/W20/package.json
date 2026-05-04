@@ -1,0 +1,10 @@
+{
+  "name": "w-21",
+  "version": "1.0.0",
+  "description": "Employee Records Management System",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.5.0"
+  }
+}
