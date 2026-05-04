@@ -109,3 +109,91 @@ Body:
 }
 ➤ Delete Book (DELETE)
 http://localhost:3000/deleteBook/<id>
+
+Option 1: Super Simple (HTML + Vanilla JS)
+
+This is the fastest way to get a working UI.
+
+1. Create a file: index.html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bookstore</title>
+</head>
+<body>
+  <h1>Bookstore</h1>
+
+  <h2>Add Book</h2>
+  <input id="title" placeholder="Title"><br>
+  <input id="author" placeholder="Author"><br>
+  <input id="price" placeholder="Price"><br>
+  <input id="genre" placeholder="Genre"><br>
+  <button onclick="addBook()">Add</button>
+
+  <h2>Books</h2>
+  <button onclick="getBooks()">Load Books</button>
+  <ul id="bookList"></ul>
+
+<script>
+const API = "http://localhost:3000";
+
+// Add book
+async function addBook() {
+  const book = {
+    title: document.getElementById("title").value,
+    authon: document.getElementById("author").value, // matches your schema typo
+    price: document.getElementById("price").value,
+    genre: document.getElementById("genre").value
+  };
+
+  await fetch(API + "/addBook", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(book)
+  });
+
+  alert("Book added!");
+}
+
+// Get books
+async function getBooks() {
+  const res = await fetch(API + "/books");
+  const data = await res.json();
+
+  const list = document.getElementById("bookList");
+  list.innerHTML = "";
+
+  data.forEach(book => {
+    const li = document.createElement("li");
+    li.innerHTML = `${book.title} - ${book.authon} - ₹${book.price}`;
+    list.appendChild(li);
+  });
+}
+</script>
+
+</body>
+</html>
+2. Run it
+
+Just open the file in your browser.
+
+⚠️ If you get a CORS error, fix it in your backend:
+
+npm install cors
+
+Then add:
+
+const cors = require('cors');
+app.use(cors());
+🔹 Option 2: Better Structure (Serve frontend from Express)
+
+Instead of opening HTML manually:
+
+Add this to your server:
+app.use(express.static('public'));
+Create folder:
+/public/index.html
+
+Now visit:
+
+http://localhost:3000

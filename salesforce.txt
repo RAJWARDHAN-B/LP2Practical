@@ -1,0 +1,242 @@
+1. Add real workflow logic (this is where it becomes “a system”) Right now everything is manual. Add automation: Apex triggers / Flow Auto-assign students to classes Auto-update status (Active / Inactive / Graduated) Prevent invalid data entry Example: If attendance < 75% → mark “At Risk” 2. Build relationships between objects Instead of isolated data: Student → Course (lookup/master-detail) Student → Attendance records Student → Grades / Exams Course → Instructor This makes it a real data model, not a table. 3. Add dashboards (this makes it “real software” instantly) Use Reports & Dashboards: Attendance trends Top performing students Class performance comparison Dropout risk list 4. Add a Lightning UI (big upgrade) Right now it looks default. In Salesforce Lightning Experience: Build Lightning Pages Add Dynamic Components Create a custom “Student Profile page” 5. Add role-based access Make it realistic: Admin → full access Teacher → only their students Student → only their own data Use: Profiles Permission Sets Sharing rules 6. Add “smart features” (this makes it impressive) Some ideas: Attendance prediction (basic logic or ML external API) Auto email alerts (attendance low / exam coming) Leave request system for students Fee tracking module 7. Add a mini portal (advanced but very strong) Use Salesforce Experience Cloud: Student login page View attendance, marks, timetable Submit assignments This turns it into a real product-like system
+
+
+
+
+
+
+✅ STEP 1 — Build the DATA MODEL (Relationships first)
+
+Go to Setup → Object Manager → Create Objects
+
+1. Create core objects
+
+You should have:
+
+Student (custom object)
+Course
+Attendance
+Exam / Grades
+Instructor (optional)
+2. Add relationships
+A. Student → Course
+
+Go to Student object → Fields & Relationships → New
+
+Type: Lookup Relationship
+Related Object: Course
+
+👉 Name: Course__c
+
+B. Attendance → Student
+
+Create object: Attendance
+
+Fields:
+
+Student (Lookup to Student)
+Date (Date)
+Status (Present/Absent)
+C. Grades → Student + Course
+
+Fields:
+
+Student (Lookup)
+Course (Lookup)
+Marks (Number)
+
+👉 Now your system is no longer flat—it is relational.
+
+⚙️ STEP 2 — AUTOMATION (Flows first, then Apex if needed)
+
+Go to: Setup → Flows
+
+2.1 Auto-assign student to course
+Create Flow:
+Type: Record-Triggered Flow
+Object: Student
+Trigger: When record is created
+Logic:
+If Course is NULL → assign default course
+
+Example:
+
+Decision: Course__c Is Null = True
+Update Record → set Course = “Default Course”
+2.2 Auto-update Student Status
+
+Create Flow:
+
+Object: Student
+Trigger: When Attendance or Grades update
+Logic:
+If Attendance < 75 → Status = “At Risk”
+If Graduation condition met → Status = “Graduated”
+2.3 Prevent invalid data
+
+Use:
+
+Validation Rules
+
+Example:
+
+Prevent future attendance date:
+Date__c > TODAY()
+
+Error:
+
+“Attendance date cannot be in the future”
+
+Prevent marks > 100:
+Marks__c > 100
+⚡ STEP 3 — APEX TRIGGERS (only if Flow is not enough)
+
+Go to Developer Console → New Apex Trigger
+
+Example: Auto-update status
+
+trigger StudentStatusTrigger on Attendance__c (after insert, after update) {
+    Set<Id> studentIds = new Set<Id>();
+
+    for(Attendance__c a : Trigger.new){
+        studentIds.add(a.Student__c);
+    }
+
+    List<Student__c> students = [
+        SELECT Id, Status__c FROM Student__c WHERE Id IN :studentIds
+    ];
+
+    for(Student__c s : students){
+        // simple logic placeholder
+        s.Status__c = 'Active';
+    }
+
+    update students;
+}
+
+👉 Use Apex only when Flow becomes limiting.
+
+📊 STEP 4 — REPORTS & DASHBOARDS
+
+Go to: Reports Tab
+
+Create Reports:
+1. Attendance Trend Report
+Report Type: Attendance
+Group by: Date
+Summarize: % Present
+2. Top Students
+Group by Student
+Sum Marks
+Sort descending
+3. At Risk Students
+
+Filter:
+
+Status = “At Risk”
+Create Dashboard:
+
+Go to Dashboards → New
+
+Add:
+
+Bar chart → Top Students
+Line chart → Attendance Trend
+Table → At Risk Students
+🎨 STEP 5 — LIGHTNING UI (Make it look like a real app)
+
+Go to Salesforce Lightning Experience
+
+5.1 Build Lightning Record Page
+
+Setup:
+
+Object Manager → Student
+Lightning Record Pages → New
+Add Components:
+Student Details
+Related List (Attendance, Grades)
+Dashboard chart
+Quick Actions (Add Attendance, Add Marks)
+5.2 Use Dynamic Visibility
+
+Example:
+
+Show “At Risk Alert” only if Status = At Risk
+🔐 STEP 6 — ROLE-BASED ACCESS CONTROL
+
+Go to Setup:
+
+6.1 Profiles
+
+Create:
+
+Admin
+Teacher
+Student
+6.2 Permission Sets (recommended)
+Allow Teachers:
+Edit Attendance
+View assigned Students only
+6.3 Sharing Rules
+
+Example:
+
+Teacher sees only:
+Students in their Course
+
+Rule:
+
+Based on Course__c
+🧠 STEP 7 — SMART FEATURES (makes it impressive)
+
+Inside Salesforce ecosystem:
+
+7.1 Email Alerts (Flow)
+Trigger: Attendance < 75
+Action: Send email
+7.2 Leave Request System
+
+Create object:
+
+Leave Request
+
+Fields:
+
+Student
+Start Date
+End Date
+Status (Pending/Approved)
+7.3 Fee Tracking
+
+Object:
+
+Fee Payment
+
+Fields:
+
+Student
+Amount
+Due Date
+Status
+7.4 Basic Prediction Logic (simple version)
+
+Flow rule:
+
+If last 3 attendance records < 70%
+→ Mark “High Risk”
+🌐 STEP 8 — EXPERIENCE CLOUD PORTAL (advanced level)
+
+Use Salesforce Experience Cloud
+
+Steps:
+Setup → Digital Experiences → Enable
+Create New Site → “Student Portal”
+Pages to build:
+Login Page
+Student Dashboard
+Attendance View
+Marks View
+Submit Leave Request
+Permissions:
+Students can only see their own records
