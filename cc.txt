@@ -1,3 +1,20 @@
+new -> select iso images -> give name -> user, pass
+NAT : file -> tools -> Network manager -> NAT Network
+
+sudo apt update
+ifconfig
+sudo apt install openssh-server
+whoami
+touch hello.txt
+echo hello world > hello.txt
+cat hello.txt
+
+sudo systemctl enable ssh
+sudo systemctl start ssh
+
+scp hello.txt <user>@<ip>:<path>
+
+
 ✅ 🔴 1. Salesforce Cloud Applications (C1, C2, C3, C4, C8, C12, C13, C16, C17, C18, C19, C20, C21)
 📌 What is common here?
 
