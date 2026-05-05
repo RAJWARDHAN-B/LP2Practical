@@ -119,3 +119,70 @@ Pro Tip (to impress examiner)
 Return proper JSON response:
 
 res.json({ message: "Employee Added" });
+
+const studentSchema = new mongoose.Schema({
+  Name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+
+  Roll_No: {
+    type: Number,
+    required: true,
+    unique: true   // no duplicate roll numbers
+  },
+
+  WAD_Marks: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: 0
+  },
+
+  CC_Marks: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: 0
+  },
+
+  DSBDA_Marks: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: 0
+  },
+
+  CNS_Marks: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: 0
+  },
+
+  AI_Marks: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: 0
+  }
+});
+
+Name: {
+  type: String,
+  match: /^[A-Za-z ]+$/
+}
+
+WAD_Marks: {
+  type: Number,
+  validate: {
+    validator: v => v >= 0 && v <= 100,
+    message: "Marks must be between 0 and 100"
+  }
+}
+
+net start MongoDB
+npx mongosh
+> use bookstore
+> db.books.find().pretty()
